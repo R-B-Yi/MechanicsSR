@@ -28,13 +28,13 @@ def matrix_column_combinations(matrix, x, output_dir):
 
         # 生成文件名并保存
         filename = os.path.join(output_dir, f'combination_{index}.txt')
-        np.savetxt(filename, combination_matrix, delimiter=' ', fmt='%d')
+        np.savetxt(filename, combination_matrix, delimiter=' ', fmt='%f')
 
     return combination_matrices
 
 # 示例
 n, m = 4, 4  # 矩阵维度
-matrix = np.random.randint(1, 10, (n, m))  # 创建一个 4x3 的随机矩阵
+matrix = np.random.randint(1, 10, (n, m))/2.3  # 创建一个 4x3 的随机矩阵
 x = 2  # 选择的列数
 output_directory = "combinations_output"  # 指定保存文件的目录
 
@@ -45,5 +45,4 @@ combinations = matrix_column_combinations(matrix, x, output_directory)
 print("Original Matrix:\n", matrix)
 print("\nColumn Combinations have been saved in the directory:", output_directory)
 
-
-# 011524 updated
+# 011524 update
