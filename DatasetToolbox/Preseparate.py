@@ -1,40 +1,49 @@
-from itertools import combinations
+import itertools
+import numpy as np
 import os
 
-def save_combinations_to_files(matrix, i, output_directory='combinations'):
-    if i > len(matrix[0]):
-        raise ValueError("i>j error")
+def matrix_column_combinations(matrix, x, output_dir):
+    # 获取矩阵的列数
+    n_cols = matrix.shape[1]-1
+    
+    # 检查x是否大于列数
+    if x > n_cols:
+        raise ValueError("x cannot be greater than the number of columns in the matrix")
 
-    column_combinations = list(combinations(matrix, i))
+    # 生成所有列组合的索引
+    column_indices = range(n_cols)
+    column_combinations = itertools.combinations(column_indices, x)
 
-    # Create the output directory if it doesn't exist
-    if not os.path.exists(output_directory):
-        os.makedirs(output_directory)
+    # 创建目录（如果不存在）
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
-    saved_files = []
-    saved_columns_indices = []
+    combination_matrices = []
 
-    for idx, combination in enumerate(column_combinations):
-        file_name = os.path.join(output_directory, f"combination_{idx+1}.txt")
-        with open(file_name, 'w') as file:
-            indices = []
-            for column_index, column in enumerate(zip(*combination)):
-                file.write('\t'.join(map(str, column)) + '\n')
-                indices.append(column_index)
-            saved_files.append(file_name)
-            saved_columns_indices.append(indices)
+    # 保存每个组合到不同的txt文件
+    for index, comb in enumerate(column_combinations):
+        #comb = (np.column_stack((comb, matrix[:, -1])))
+        combination_matrix = np.column_stack((matrix[:, list(comb)], matrix[:, -1]))
+        combination_matrices.append(combination_matrix)
 
-    return saved_files, saved_columns_indices
+        # 生成文件名并保存
+        filename = os.path.join(output_dir, f'combination_{index}.txt')
+        np.savetxt(filename, combination_matrix, delimiter=' ', fmt='%d')
 
-# Example usage:
-input_matrix = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-]
+    return combination_matrices
 
-number_of_columns = 2
+# 示例
+n, m = 4, 4  # 矩阵维度
+matrix = np.random.randint(1, 10, (n, m))  # 创建一个 4x3 的随机矩阵
+x = 2  # 选择的列数
+output_directory = "combinations_output"  # 指定保存文件的目录
 
-output_files, saved_columns_indices = save_combinations_to_files(input_matrix, number_of_columns)
-print(f"Combinations saved to files: {output_files}")
-print(f"Columns saved in each file: {saved_columns_indices}")
+# 获取所有基于 x 的列组合，并保存到txt文件
+combinations = matrix_column_combinations(matrix, x, output_directory)
+
+# 打印结果
+print("Original Matrix:\n", matrix)
+print("\nColumn Combinations have been saved in the directory:", output_directory)
+
+
+# 011524 updated
