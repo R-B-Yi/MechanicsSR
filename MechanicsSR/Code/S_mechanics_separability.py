@@ -394,7 +394,8 @@ def do_separability_multiply(pathdir, filename, list_i,list_j):
         for t1 in list_j:
             fact_vary_one[:,t1] = torch.full((len(factors),),torch.median(factors[:,t1]))
         for t2 in list_i:
-            fact_vary_rest[:,t2] = torch.full((len(factors),),torch.median(factors[:,t2]))        
+            fact_vary_rest[:,t2] = torch.full((len(factors),),torch.median(factors[:,t2]))  
+        print('constants here',torch.median(factors[:,t1]),torch.median(factors[:,t2]))           
         with torch.no_grad():
             str1 = filename + "-mult_a"
             str2 = filename + "-mult_b"
@@ -497,3 +498,4 @@ def do_separability_multiply(pathdir, filename, list_i,list_j):
 '''
         
 # update on 01/11/24 17:49
+# 02/26/24 23:30 added constant output line 398
