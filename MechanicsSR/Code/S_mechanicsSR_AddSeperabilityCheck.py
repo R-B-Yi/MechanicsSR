@@ -1,9 +1,6 @@
 from __future__ import print_function
 import torch
 import os
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
 import pandas as pd
 import numpy as np
 import torch
@@ -16,6 +13,7 @@ import time
 import math
 
 def check_separability_plus(pathdir, filename):
+    print('start to check Additional separability')
     # separability tolerance (hyperparameter)
     tolerance = 2
     # compare first 4 digits
