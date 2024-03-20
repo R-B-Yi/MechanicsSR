@@ -11,7 +11,7 @@ from S_NN_eval import NN_eval
 #from S_symmetry import *
 #from S_mechanics_symmetry import *
 #from S_separability import *
-from S_mechanics_separability import *
+from S_NonNN_mechanics_separability import *
 from S_mechanicsSR_MulSeparabilityCheck import *    
 from S_mechanicsSR_AddSeperabilityCheck import *
 from S_change_output import *
@@ -70,6 +70,9 @@ def run_AI_all(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", polyfit
     
     # Separabilities
     separability_plus_result = check_separability_plus(pathdir,filename)
+    # Check here
+
+    print('check error here')
     separability_multiply_result = check_separability_multiply(pathdir,filename)
     
     # Abang : checkpoint here ban symmetry
