@@ -57,17 +57,10 @@ def do_separability_plus(pathdir, filename, list_i,list_j):
             product = product
         product = product.float()
 
-        # load the trained model and put it in evaluation mode
-        if is_cuda:
-            model = SimpleNet(n_variables).cuda()
-        else:
-            model = SimpleNet(n_variables)
         #model.load_state_dict(torch.load(pathdir_weights+filename+".h5"))
         #model.eval()
 
         # make some variables at the time equal to the median of factors
-        models_one = []
-        models_rest = []
         
         fact_vary = factors.clone()
 
