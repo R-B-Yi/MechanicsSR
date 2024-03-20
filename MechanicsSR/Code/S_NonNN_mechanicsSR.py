@@ -58,7 +58,8 @@ def run_AI_all(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", polyfit
     # check if the NN is trained. If it is not, train it on the data.
     print("Checking for symmetry \n", filename)
     if len(data[0])<3:
-        print("Just one variable!")
+        print("Just one variable! && return results")
+        idx_min = -1
         pass       
     # Check which symmetry/separability is the best
     
@@ -69,19 +70,19 @@ def run_AI_all(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", polyfit
     #symmetry_plus_result = check_translational_symmetry_plus(pathdir,filename)
     
     # Separabilities
-    separability_plus_result = check_separability_plus(pathdir,filename)
+    else:
+        separability_plus_result = check_separability_plus(pathdir,filename)
     # Check here
 
-    print('check error here')
-    separability_multiply_result = check_separability_mul(pathdir,filename)
+        print('check error here')
+        separability_multiply_result = check_separability_mul(pathdir,filename)
     
     # Abang : checkpoint here ban symmetry
 #    symmetry_plus_result[0] = (999,) + symmetry_plus_result[0]   Error 'tuple' object does not support item assignment
     
     # symmetry_plus_result = [min_er, index_i, index_j] by definition
-    idx_min = idx_min = np.argmin(np.array([separability_plus_result[0], separability_multiply_result[0]]))
-    print ('idx_min', idx_min)
-    idx_min = np.argmin(np.array([separability_plus_result[0], separability_multiply_result[0]]))
+        idx_min = np.argmin(np.array([separability_plus_result[0], separability_multiply_result[0]]))
+        print ('idx_min', idx_min)
 # Abang : original version        idx_min = np.argmin(np.array([symmetry_plus_result[0], symmetry_minus_result[0], symmetry_multiply_result[0], symmetry_divide_result[0], separability_plus_result[0], separability_multiply_result[0]]))
 
     # Apply the best separability and rerun the main function on this new file    
