@@ -73,7 +73,7 @@ def run_AI_all(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", polyfit
     # Check here
 
     print('check error here')
-    separability_multiply_result = check_separability_multiply(pathdir,filename)
+    separability_multiply_result = check_separability_mul(pathdir,filename)
     
     # Abang : checkpoint here ban symmetry
 #    symmetry_plus_result[0] = (999,) + symmetry_plus_result[0]   Error 'tuple' object does not support item assignment
