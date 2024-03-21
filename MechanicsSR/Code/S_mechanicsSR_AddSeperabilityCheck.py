@@ -50,6 +50,7 @@ def check_separability_plus(pathdir, filename):
     matching_rows = np.where(np.all(np.isclose(variables, fact_mean, atol=digits_tolerance),axis=1))[0]
     row_idx = matching_rows[0]
     fact_constant = ogdata[row_idx,-1]
+    print('constant=',fact_constant)
     #print('variables',variables)
     #print('row_idx=, function_constant = ', row_idx,fact_constant)
     # loop through all indices combinations
@@ -71,7 +72,7 @@ def check_separability_plus(pathdir, filename):
                 xy_bar_result=[]
                 fact_vary_one[:,t1] = torch.full((len(factors),),torch.median(factors[:,t1]))
                 fact_one = fact_vary_one.numpy()
-                print('fact_one',fact_one)
+                #print('fact_one',fact_one)
                 fact_one = np.unique(fact_one, axis=0)
                 #print('fact_one',fact_one)  # fact_one is {x,ybar} without repeat x, which is correct.
                 i_row_max = fact_one.shape[0] 
@@ -117,7 +118,7 @@ def check_separability_plus(pathdir, filename):
             Er_add = 0
             xy_bar_search = fact_one[:,j]
             x_bary_search = fact_rest[:,rest_indx]
-            print(xy_bar_search)
+            #print(xy_bar_search)
             idx_ogdata = ogdata.shape[0]
             idx_ybar = xy_bar.shape[0]
             idx_xbar = x_bary.shape[0]
