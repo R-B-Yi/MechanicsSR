@@ -141,7 +141,7 @@ def check_separability_mul(pathdir, filename):
                     best_i = j
                     best_j = rest_indx
             else:
-                print('id2 no multiplication separability Er_total=')
+                print('id2 no multiplication separability ')
                 return 99999,j,rest_indx
                     
     return min_error, best_i, best_j

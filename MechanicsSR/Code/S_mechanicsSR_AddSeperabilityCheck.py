@@ -156,7 +156,7 @@ def check_separability_plus(pathdir, filename):
                     best_i = j
                     best_j = rest_indx
             else:
-                print('id2 no additive separability Er_total=',mse)
+                print('id2 no additive separability ')
                 return 99999,j,rest_indx
 
                     
