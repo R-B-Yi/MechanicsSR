@@ -126,22 +126,23 @@ def check_separability_mul(pathdir, filename):
                                 break
                     if t3_found ==1:
                         break
+            if er_idx<=0:
+                print('id2 no multiplication separability Er_total=')
+                return 99999,j,rest_indx
             if er_idx > 0:
                 #print('er_idx=',er_idx)
                 mse= Er_mul / er_idx
                                 # if error is above tolerance then quit
-                if mse>tolerance:
-                    print('no multiplication separability Er_total=',mse)
-                    return 99999,j,rest_indx
-
-                if mse<=tolerance:
-                    print('Multiplication separability found, er=',mse)
-                    print('variable_idx = ', j)
-                    min_error = mse
-                    best_i = j
-                    best_j = rest_indx
-            else:
-                print('id2 no multiplication separability ')
+            if mse>tolerance:
+                print('no multiplication separability Er_total=',mse)
                 return 99999,j,rest_indx
+
+            if mse<=tolerance:
+                print('Multiplication separability found, er=',mse)
+                print('variable_idx = ', j)
+                min_error = mse
+                best_i = j
+                best_j = rest_indx
+
                     
     return min_error, best_i, best_j
