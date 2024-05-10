@@ -17,7 +17,7 @@ import math
 
 def check_separability_mul(pathdir, filename):
     # separability tolerance (hyperparameter)
-    tolerance = 2
+    tolerance = 0.05
     print('start to check multiplication separability')
     # compare first 4 digits
     digits_tolerance = 1e-3

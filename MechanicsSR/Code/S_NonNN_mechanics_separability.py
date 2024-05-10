@@ -95,7 +95,7 @@ def do_separability_plus(pathdir, filename, list_i,list_j):
                         #print('1added',ck1.unsqueeze(0))
                         break
             data_sep_1 = np.delete(data_sep_1, list_j, axis=1)
-            print('addtion datasep1 prepared',data_sep_1)
+            print('addtive datasep1 prepared',data_sep_1)
             # Save the second half
             check_sub_2 = fact_vary_rest
 
@@ -111,7 +111,7 @@ def do_separability_plus(pathdir, filename, list_i,list_j):
                         #print('1added',ck1.unsqueeze(0))
                         break
             data_sep_2 = np.delete(data_sep_2, list_i, axis=1)
-            print('addition datasep2 prepared',data_sep_2)
+            print('additive datasep2 prepared',data_sep_2)
             try:
                 os.mkdir("results/separable_add/")
             except:
