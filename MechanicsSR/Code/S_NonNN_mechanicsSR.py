@@ -25,7 +25,7 @@ from S_add_bf_on_numbers_on_pareto import add_bf_on_numbers_on_pareto
 from dimensionalAnalysis import dimensionalAnalysis
 
 PA = ParetoSet()
-def run_AI_all(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", polyfit_deg=3, PA=PA):
+def run_modelfree_sr(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", polyfit_deg=3, PA=PA):
     try:
         os.mkdir("results/")
     except:
@@ -71,22 +71,17 @@ def run_AI_all(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", polyfit
 
         print('check error here')
         separability_multiply_result = check_separability_mul(pathdir,filename)
-    
-    # Abang : checkpoint here ban symmetry
-#    symmetry_plus_result[0] = (999,) + symmetry_plus_result[0]   Error 'tuple' object does not support item assignment
-    
-    # symmetry_plus_result = [min_er, index_i, index_j] by definition
+
         idx_min = np.argmin(np.array([separability_plus_result[0], separability_multiply_result[0]]))
         print ('idx_min', idx_min)
-# Abang : original version        idx_min = np.argmin(np.array([symmetry_plus_result[0], symmetry_minus_result[0], symmetry_multiply_result[0], symmetry_divide_result[0], separability_plus_result[0], separability_multiply_result[0]]))
-
+        
     # Apply the best separability and rerun the main function on this new file    
     if idx_min == 0:
         new_pathdir1, new_filename1, new_pathdir2, new_filename2,  = do_separability_plus(pathdir,filename,separability_plus_result[1],separability_plus_result[2])
         PA1_ = ParetoSet()
-        PA1 = run_AI_all(new_pathdir1,new_filename1,BF_try_time,BF_ops_file_type, polyfit_deg, PA1_)
+        PA1 = run_modelfree_sr(new_pathdir1,new_filename1,BF_try_time,BF_ops_file_type, polyfit_deg, PA1_)
         PA2_ = ParetoSet()
-        PA2 = run_AI_all(new_pathdir2,new_filename2,BF_try_time,BF_ops_file_type, polyfit_deg, PA2_)
+        PA2 = run_modelfree_sr(new_pathdir2,new_filename2,BF_try_time,BF_ops_file_type, polyfit_deg, PA2_)
         combine_pareto_data = np.loadtxt(pathdir+filename)
         PA = combine_pareto(combine_pareto_data,PA1,PA2,separability_plus_result[1],separability_plus_result[2],PA,"+")
         return PA 
@@ -94,28 +89,16 @@ def run_AI_all(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", polyfit
     elif idx_min == 1:
         new_pathdir1, new_filename1, new_pathdir2, new_filename2,  = do_separability_multiply(pathdir,filename,separability_multiply_result[1],separability_multiply_result[2])
         PA1_ = ParetoSet()
-        PA1 = run_AI_all(new_pathdir1,new_filename1,BF_try_time,BF_ops_file_type, polyfit_deg, PA1_)
+        PA1 = run_modelfree_sr(new_pathdir1,new_filename1,BF_try_time,BF_ops_file_type, polyfit_deg, PA1_)
         PA2_ = ParetoSet()
-        PA2 = run_AI_all(new_pathdir2,new_filename2,BF_try_time,BF_ops_file_type, polyfit_deg, PA2_)
+        PA2 = run_modelfree_sr(new_pathdir2,new_filename2,BF_try_time,BF_ops_file_type, polyfit_deg, PA2_)
         combine_pareto_data = np.loadtxt(pathdir+filename)
         PA = combine_pareto(combine_pareto_data,PA1,PA2,separability_multiply_result[1],separability_multiply_result[2],PA,"*")
         return PA 
     else:
         return PA
 
-# this runs snap on the output of aifeynman
-def run_aifeynman(pathdir,filename,BF_try_time,BF_ops_file_type, polyfit_deg=3, vars_name=[],test_percentage=20):    
-    # If the variable names are passed, do the dimensional analysis first
-    filename_orig = filename
-    try:
-        if vars_name!=[]:
-            dimensionalAnalysis(pathdir,filename,vars_name)
-            DR_file = filename + "_dim_red_variables.txt"
-            filename = filename + "_dim_red"
-        else:
-            DR_file = ""
-    except:
-        DR_file = ""
+def run_mechanicsSR(pathdir,filename,BF_try_time,BF_ops_file_type, polyfit_deg=3, vars_name=[],test_percentage=0):    
 
     # Split the data into train and test set                                                                                                                                      
     input_data = np.loadtxt(pathdir+filename)
@@ -130,7 +113,7 @@ def run_aifeynman(pathdir,filename,BF_try_time,BF_ops_file_type, polyfit_deg=3, 
 
     PA = ParetoSet()
     # Run the code on the train data 
-    PA = run_AI_all(pathdir,filename,BF_try_time,BF_ops_file_type, polyfit_deg, PA=PA)
+    PA = run_modelfree_sr(pathdir,filename,BF_try_time,BF_ops_file_type, polyfit_deg, PA=PA)
     PA_list = PA.get_pareto_points()
 
     # Run bf snap on the resulted equations
@@ -140,8 +123,6 @@ def run_aifeynman(pathdir,filename,BF_try_time,BF_ops_file_type, polyfit_deg=3, 
         except:
             continue
     PA_list = PA.get_pareto_points()
-
-    np.savetxt("results/solution_before_snap_%s.txt" %filename,PA_list,fmt="%s")
 
     # Run zero, integer and rational snap on the resulted equations  
     for j in range(len(PA_list)):
