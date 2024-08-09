@@ -98,7 +98,7 @@ def run_modelfree_sr(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", p
     else:
         return PA
 
-def run_mechanicsSR(pathdir,filename,BF_try_time,BF_ops_file_type, polyfit_deg=3, vars_name=[],test_percentage=0):    
+def run_mechanicsSR(pathdir,filename,BF_try_time,BF_ops_file_type, polyfit_deg=3, vars_name=[],test_percentage=20):    
 
     # Split the data into train and test set                                                                                                                                      
     input_data = np.loadtxt(pathdir+filename)
