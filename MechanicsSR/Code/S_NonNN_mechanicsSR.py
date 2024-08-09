@@ -123,7 +123,8 @@ def run_mechanicsSR(pathdir,filename,BF_try_time,BF_ops_file_type, polyfit_deg=3
         except:
             continue
     PA_list = PA.get_pareto_points()
-
+    np.savetxt("results/solution_before_snap_%s.txt" %filename,PA_list,fmt="%s")
+    
     # Run zero, integer and rational snap on the resulted equations  
     for j in range(len(PA_list)):
         PA = add_snap_expr_on_pareto(pathdir,filename,PA_list[j][-1],PA, "")
