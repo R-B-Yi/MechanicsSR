@@ -5,12 +5,7 @@ from os import path
 from get_pareto import Point, ParetoSet
 from RPN_to_pytorch import RPN_to_pytorch
 from RPN_to_eq import RPN_to_eq
-from S_NN_train import NN_train
-from S_NN_eval import NN_eval
 
-#from S_symmetry import *
-#from S_mechanics_symmetry import *
-#from S_separability import *
 from S_NonNN_mechanics_separability import *
 from S_mechanicsSR_MulSeparabilityCheck import *    
 from S_mechanicsSR_AddSeperabilityCheck import *
