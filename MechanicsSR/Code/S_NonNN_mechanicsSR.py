@@ -106,7 +106,7 @@ def run_mechanicsSR(pathdir,filename,BF_try_time,BF_ops_file_type, polyfit_deg=3
 
     train_data = input_data[sep_idx[0:(100-test_percentage)*len(input_data)//100]]
     test_data = input_data[sep_idx[test_percentage*len(input_data)//100:len(input_data)]]
-
+    DR_file = ""
     np.savetxt(pathdir+filename+"_train",train_data)
     if test_data.size != 0:
         np.savetxt(pathdir+filename+"_test",test_data)
