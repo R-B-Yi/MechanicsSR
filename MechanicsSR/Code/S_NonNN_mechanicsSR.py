@@ -9,6 +9,7 @@ from RPN_to_eq import RPN_to_eq
 from S_NonNN_mechanics_separability import *
 from S_mechanicsSR_MulSeparabilityCheck import *    
 from S_mechanicsSR_AddSeperabilityCheck import *
+
 from S_change_output import *
 from S_brute_force import brute_force
 from S_combine_pareto import combine_pareto
@@ -50,20 +51,13 @@ def run_modelfree_sr(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", p
     PA = get_tan(pathdir,"results/mystery_world_tan/",filename,BF_try_time,BF_ops_file_type, PA, polyfit_deg)
 
 #############################################################################################################################  
-    # check if the NN is trained. If it is not, train it on the data.
+    # If less than 2 variable then no separability
     print("Checking for symmetry \n", filename)
     if len(data[0])<3:
         print("Just one variable! && return results")
         idx_min = -1
         pass       
-    # Check which symmetry/separability is the best
-    
-    # Symmetries
-    #symmetry_minus_result = check_translational_symmetry_minus(pathdir,filename)
-    #symmetry_divide_result = check_translational_symmetry_divide(pathdir,filename)
-    #symmetry_multiply_result = check_translational_symmetry_multiply(pathdir,filename)
-    #symmetry_plus_result = check_translational_symmetry_plus(pathdir,filename)
-    
+
     # Separabilities
     else:
         separability_plus_result = check_separability_plus(pathdir,filename)
@@ -99,8 +93,7 @@ def run_modelfree_sr(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", p
         return PA
 
 def run_mechanicsSR(pathdir,filename,BF_try_time,BF_ops_file_type, polyfit_deg=3, vars_name=[],test_percentage=0):    
-
-    # Split the data into train and test set                                                                                                                                      
+                                                                                                                                  
     input_data = np.loadtxt(pathdir+filename)
     sep_idx = np.random.permutation(len(input_data))
 
