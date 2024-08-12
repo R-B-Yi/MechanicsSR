@@ -53,7 +53,7 @@ def run_modelfree_sr(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", p
 #############################################################################################################################  
     # If less than 2 variable then no separability
     if len(data[0])<3:
-        print("Just one variable! && return results")
+        print("Just one variable! && return results",filename)
         idx_min = -1
         pass       
 
