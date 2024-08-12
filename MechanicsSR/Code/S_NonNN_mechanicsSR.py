@@ -52,7 +52,6 @@ def run_modelfree_sr(pathdir,filename,BF_try_time=60,BF_ops_file_type="14ops", p
 
 #############################################################################################################################  
     # If less than 2 variable then no separability
-    print("Checking for symmetry \n", filename)
     if len(data[0])<3:
         print("Just one variable! && return results")
         idx_min = -1
@@ -100,6 +99,7 @@ def run_mechanicsSR(pathdir,filename,BF_try_time,BF_ops_file_type, polyfit_deg=3
     train_data = input_data[sep_idx[0:(100-test_percentage)*len(input_data)//100]]
     test_data = input_data[sep_idx[test_percentage*len(input_data)//100:len(input_data)]]
     DR_file = ""
+    filename_orig = filename
     np.savetxt(pathdir+filename+"_train",train_data)
     if test_data.size != 0:
         np.savetxt(pathdir+filename+"_test",test_data)
